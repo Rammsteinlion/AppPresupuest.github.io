@@ -6,12 +6,14 @@ const ingresos = [
 
 const egresos = [
     new Egreso('Internet', 113500),
-    new Egreso('Datos', 54500)
+    new Egreso('Datos', 54500),
+    new Egreso('Ropa', 60000)
 ];
 
 let cargarApp = () => {
     cargarCabecero();
     cargarIngresos();
+    cargarEgresos();
 }
 
 let TotalIngresos = () => {
@@ -65,7 +67,8 @@ const crearIngresoHTML = (ingreso) => {
         <div class="elemento_valor">${formatoMoneda(ingreso.valor)}</div>
         <div class="elemento_eliminar">
             <button class='elemento_eliminar--btn'>
-                <ion-icon name="close-circle-outline"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                onclick='eliminarIngreso(${ingreso.id})'></ion-icon>
             </button>
         </div>
     </div>
@@ -73,3 +76,41 @@ const crearIngresoHTML = (ingreso) => {
     return ingresoHtml;
 }
 
+
+const eliminarIngreso = (id) =>{
+    let indiceEliminar = ingresos.findIndex(ingreso =>ingreso.id === id);
+    ingresos.splice(indiceEliminar,1);
+    cargarCabecero();
+    cargarIngresos();
+}
+
+const eliminarEgresos = (id) =>{
+    let indiceEliminar = egresos.findIndex(egreso => egreso.id === id);
+    egresos.splice(indiceEliminar,1);
+    cargarCabecero();
+    cargarEgresos();
+}
+const cargarEgresos =() =>{
+    let egresoshtml = '';
+    for(let egreso of egresos){
+        egresoshtml += crearEgreso(egreso);
+    }
+    document.getElementById('lista-egresos').innerHTML = egresoshtml;
+}
+
+const crearEgreso= (egreso) =>{
+   let egresohtml= `<div class="elemento limpiarEstilos">
+   <div class="elemento_descripcion">${egreso.descripcion} </div>
+   <div class="derecha limpiarEstilos">
+       <div class="elemento_valor">${formatoMoneda(egreso.valor)} </div>
+       <div class="elemento_porcentaje">${formatoPorcentaje(egreso.valor/TotalEgresos())}</div>
+       <div class="elemento_eliminar">
+           <button class='elemento_eliminar--btn'>
+               <ion-icon name="close-circle-outline"
+               onclick='eliminarEgresos(${egreso.id})'></ion-icon>
+           </button>
+       </div>
+   </div>
+</div>`;
+return egresohtml;
+}
