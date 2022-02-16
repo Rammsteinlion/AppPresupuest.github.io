@@ -1,13 +1,10 @@
 const ingresos = [
-    new Ingreso('Sueldo', 1500000),
-    new Ingreso('Auxilio Transporte', 117500)
+    //new Ingreso('Sueldo', 1500000)
 ];
 
 
 const egresos = [
-    new Egreso('Internet', 113500),
-    new Egreso('Datos', 54500),
-    new Egreso('Ropa', 60000)
+    //new Egreso('Internet', 113500)
 ];
 
 let cargarApp = () => {
@@ -81,7 +78,7 @@ const eliminarIngreso = (id) =>{
     let indiceEliminar = ingresos.findIndex(ingreso =>ingreso.id === id);
     ingresos.splice(indiceEliminar,1);
     cargarCabecero();
-    cargarIngresos();
+    cargarIngresos();   
 }
 
 const eliminarEgresos = (id) =>{
@@ -89,6 +86,7 @@ const eliminarEgresos = (id) =>{
     egresos.splice(indiceEliminar,1);
     cargarCabecero();
     cargarEgresos();
+    
 }
 const cargarEgresos =() =>{
     let egresoshtml = '';
@@ -113,4 +111,27 @@ const crearEgreso= (egreso) =>{
    </div>
 </div>`;
 return egresohtml;
+}
+
+const agregarDato = () =>{
+    let forma = document.forms['forma'];
+    let tipo = forma['tipo'];
+    let descripcion = forma['descripcion'];
+    let valor = forma['valor'];
+
+    if(descripcion.value !=='' && valor.value !==''){
+        if(tipo.value === 'ingreso'){
+            //Number(valor.value) convierte en numerico un string
+            //+valor.value convierte en numerico un string
+            ingresos.push(new Ingreso(descripcion.value, +valor.value));
+            cargarCabecero();
+            cargarIngresos();
+            this.forma.reset();
+        }else if(tipo.value === 'egreso'){
+            egresos.push(new Egreso(descripcion.value,+valor.value));
+            cargarCabecero();
+            cargarEgresos();
+            this.forma.reset();
+        }
+    }
 }

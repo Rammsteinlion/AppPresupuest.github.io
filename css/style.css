@@ -118,9 +118,9 @@ body {
 }
 
 .agregar_tipo {
-  width: 55px;
+  /*width: 70px;*/
   border: 1px solid #e7e7e7;
-  height: 44px;
+  height: 50px;
   font-size: 18px;
   color: inherit;
   background-color: #fff;
